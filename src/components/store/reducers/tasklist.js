@@ -1,0 +1,55 @@
+const taskList = [
+    {
+        id: 1,
+        title: 'Vazamento',
+        status: 'open',
+        priority: 'normal',
+        createdAt: '1641006000',
+        finishedAt: '',
+        tags: ['Prioridade', 'Data para finalizar', 'Tag'],
+        comments: '',
+    },
+    {
+        id: 2,
+        title: 'Consertar',
+        status: 'done',
+        priority: 'importante',
+        createdAt: '1641006000',
+        finishedAt: '1642643551',
+        tags: ['Prioridade', 'Data para finalizar', 'Tag'],
+        comments: '',
+    },
+    {
+        id: 3,
+        title: 'Avaliar',
+        status: 'done',
+        priority: 'urgente',
+        createdAt: '1641005000',
+        finishedAt: '1642642551',
+        tags: ['Prioridade', 'Data para finalizar', 'Tag'],
+        comments: '',
+    },
+    {
+        id: 4,
+        title: 'Avaliar',
+        status: 'done',
+        priority: 'urgente',
+        createdAt: '1641005000',
+        finishedAt: '1642642551',
+        tags: ['Prioridade', 'Data para finalizar', 'Tag'],
+        comments: '',
+    },
+    {
+        id: 5,
+        title: 'Avaliar',
+        status: 'open',
+        priority: 'urgente',
+        createdAt: '1641005000',
+        finishedAt: '1642642551',
+        tags: ['Prioridade', 'Data para finalizar', 'Tag'],
+        comments: '',
+    },
+
+];
+
+export default taskList;

@@ -6,7 +6,7 @@ export default function search(state = INITIAL_STATE, action) {
     switch (action.type) {
         case 'UPDATE_SEARCH':
             if (!!action.value) {
-                return { value: action.value }
+                return { ...state, value: action.value }
             } else {
                 return { value: '' };
             }

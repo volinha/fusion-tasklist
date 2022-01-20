@@ -47,7 +47,6 @@ const CardButtons = styled(Button)`
 `
 
 export default function Task({ task, done }) {
-
     return (
         <Box style={{ marginTop: '8px' }}>
             <Card variant="outlined" >
@@ -60,9 +59,9 @@ export default function Task({ task, done }) {
                             <Typography sx={{ mb: 1.5 }} color="text.secondary">
                                 {task.priority}
                             </Typography>
-                            {task.tags.map(item => {
+                            {task.tags.map((item, index) => {
                                 return (
-                                    <Tags>
+                                    <Tags key={index}>
                                         <WarningIcon fontSize="small" />&nbsp;{item}
                                     </Tags>
                                 )

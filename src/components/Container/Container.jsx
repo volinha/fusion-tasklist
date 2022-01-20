@@ -17,7 +17,10 @@ export default function Container(props) {
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         {props.quantity == 1 ? props.quantity + " tarefa" : props.quantity + " tarefas"}
                     </Typography>
-                    {props.children}
+                    <div style={{overflow: 'auto',padding: '2px', maxHeight: '700px'}}>
+                        {props.children}
+                    </div>
+                    
                 </CardContent>
                 <CardActions>
                     

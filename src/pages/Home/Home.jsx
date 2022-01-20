@@ -5,7 +5,7 @@ import Container from '../../components/Container/Container';
 import Task from '../../components/Task/Task';
 
 const Home = () => {
-    const tasks = useSelector(state => state.tasks);
+    const tasks = useSelector(state => state.tasks.taskList);
     const searchValue = useSelector(state => state.search.value);
 
     const filteredTasks = !!searchValue ? 

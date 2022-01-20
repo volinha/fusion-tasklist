@@ -1,6 +1,6 @@
 const taskList = [
     {
-        id: 1,
+        id: '091c2f7a-1731-4b79-9328-f833d4c5855a',
         title: 'Vazamento',
         status: 'open',
         priority: 'normal',
@@ -10,7 +10,7 @@ const taskList = [
         comments: '',
     },
     {
-        id: 2,
+        id: 'ba9117fa-2d87-4d61-8317-d9a81b170e42',
         title: 'Consertar',
         status: 'done',
         priority: 'importante',
@@ -20,7 +20,7 @@ const taskList = [
         comments: '',
     },
     {
-        id: 3,
+        id: '68a40499-07df-406e-b11f-4f49594fffe9',
         title: 'Avaliar',
         status: 'done',
         priority: 'urgente',
@@ -30,7 +30,7 @@ const taskList = [
         comments: '',
     },
     {
-        id: 4,
+        id: '9367dcb9-af3e-4b7a-bf0b-9f248ae4408a',
         title: 'Avaliar',
         status: 'done',
         priority: 'urgente',
@@ -40,7 +40,7 @@ const taskList = [
         comments: '',
     },
     {
-        id: 5,
+        id: '39794488-c757-49cc-aaa3-bc2e3dd91bb0',
         title: 'Avaliar',
         status: 'open',
         priority: 'urgente',
@@ -50,7 +50,7 @@ const taskList = [
         comments: '',
     },
     {
-        id: 6,
+        id: '2e9b572e-5957-4da9-82c2-e5d74644f864',
         title: 'Checar',
         status: 'done',
         priority: 'importante',

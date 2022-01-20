@@ -49,7 +49,16 @@ const taskList = [
         tags: ['Prioridade', 'Data para finalizar', 'Tag'],
         comments: '',
     },
-
+    {
+        id: 6,
+        title: 'Checar',
+        status: 'done',
+        priority: 'importante',
+        createdAt: '1641005250',
+        finishedAt: '1642642551',
+        tags: ['Prioridade', 'Data para finalizar', 'Tag'],
+        comments: '',
+    },
 ];
 
 export default taskList;

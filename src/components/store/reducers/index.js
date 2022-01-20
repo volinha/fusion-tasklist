@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
-import tasks from './tasksReducer';
+import tasks from './tasks';
+import search from './search';
 
 export default combineReducers({
-    tasks
+    tasks,
+    search
 })

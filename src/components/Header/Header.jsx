@@ -5,6 +5,9 @@ import CustomButton from '../Button/CustomButton';
 
 import SearchIcon from '@mui/icons-material/Search';
 
+import { useDispatch } from 'react-redux';
+import searchAction from '../store/actions/search';
+
 const HeaderWrapper = styled.div`
     width: 100vw;
     height: 8vh;
@@ -23,6 +26,9 @@ const HeaderTitle = styled.h1`
 `
 
 const Header = ({ children, title }) => {
+
+    const dispatch = useDispatch();
+
     return (
         <HeaderWrapper>
             <Grid
@@ -33,8 +39,14 @@ const Header = ({ children, title }) => {
             >
                 <HeaderTitle>{title}</HeaderTitle>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
-                    <SearchIcon sx={{ color: 'action.active', mr: 1, my: 0.5 }} />
-                    <TextField id="search-textfield" label="Encontrar" variant="standard" />
+                    <SearchIcon sx={{ mr: 1, my: 0.5 }} />
+                    <TextField 
+                        type="search" 
+                        id="search-textfield" 
+                        label="Encontrar" 
+                        variant="standard" 
+                        onChange={(e) => dispatch(searchAction.SearchTextUpdate(e.target.value))}
+                    />
                 </Box>
                 <CustomButton
                     content="+ Tarefa"

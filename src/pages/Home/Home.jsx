@@ -6,17 +6,23 @@ import Task from '../../components/Task/Task';
 
 const Home = () => {
     const tasks = useSelector(state => state.tasks);
+    const searchValue = useSelector(state => state.search.value);
 
-    function isOpen(item){
+    const filteredTasks = !!searchValue ? 
+    tasks.filter(task => {
+        return  task.title.toLowerCase().includes(searchValue.toLowerCase()) ||
+                task.status.toLowerCase().includes(searchValue.toLowerCase()) ||
+                task.priority.toLowerCase().includes(searchValue.toLowerCase());
+    })
+    : tasks;
+
+    var openTasks = filteredTasks.filter(item => {
         return item.status === 'open';
-    }
+    });
 
-    function isDone(item){
+    var doneTasks = filteredTasks.filter(item => {
         return item.status === 'done';
-    }
-
-    var openTasks = tasks.filter(isOpen);
-    var doneTasks = tasks.filter(isDone);
+    });
 
     return (
         <div>
@@ -37,8 +43,7 @@ const Home = () => {
                             <Task
                                 key={item.id}
                                 task={item}
-                            >
-                            </Task>
+                            />
                         )
                     })}
                 </Container>

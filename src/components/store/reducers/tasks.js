@@ -7,8 +7,7 @@ const INITIAL_STATE = {
 export default function tasks(state = INITIAL_STATE, action){
     switch(action.type) {
         case 'TASK_ADD':
-            localStorage.addItem('@tasklist',{...state, taskList: [...state.taskList, action.payload]});
-            return 0;
+            return {...state, taskList: [...state.taskList, action.payload]};
         default:
             return state;
     }

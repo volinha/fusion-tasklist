@@ -15,7 +15,7 @@ const RemoveTagList = (id) => {
 
 const ClearTagList = () => {
     return{
-        type: 'TAG_CLEAR'
+        type: 'TAG_CLEARLIST'
     }
 }
 

@@ -13,6 +13,8 @@ export default function tags(state = INITIAL_STATE, action) {
                     return item.id !== action.id
                 })
             }
+        case 'TAG_CLEARLIST':
+            return {...INITIAL_STATE}
         default:
             return state;
     }

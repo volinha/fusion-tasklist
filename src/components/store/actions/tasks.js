@@ -5,10 +5,10 @@ const AddTask = (value) => {
     }
 }
 
-const RemoveTask = (value) => {
+const RemoveTask = (id) => {
     return {
         type: 'TASK_REMOVE',
-        value
+        id
     }
 }
 
@@ -19,10 +19,19 @@ const EditTask = (value) => {
     }
 }
 
-const FinishTask = (value) => {
+const FinishTask = (id, comments) => {
     return {
         type: 'TASK_FINISH',
-        payload: value
+        id: id,
+        comments: comments
+    }
+}
+
+const RemoveTag = (tagId, taskId) => {
+    return {
+        type: 'TASK_REMOVETAG',
+        tagId,
+        taskId
     }
 }
 
@@ -31,6 +40,7 @@ export default {
     AddTask,
     RemoveTask,
     EditTask,
-    FinishTask
+    FinishTask,
+    RemoveTag
 }
 

@@ -50,6 +50,11 @@ const Header = ({ children, title }) => {
                 </Box>
                 <CustomButton
                     content="+ Tarefa"
+                    to="/new_task"
+                />
+                <CustomButton
+                    content="Ver Tarefas"
+                    to="/"
                 />
             </Grid>
         </HeaderWrapper>

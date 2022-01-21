@@ -1,4 +1,4 @@
-import * as React from 'react';
+import react from 'react';
 
 import { Grid } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -62,10 +62,11 @@ export default function Task({ task, done }) {
                             {task.tags.map((item, index) => {
                                 return (
                                     <Tags key={index}>
-                                        <WarningIcon fontSize="small" />&nbsp;{item}
+                                        <WarningIcon fontSize="small" />{item.value}
                                     </Tags>
                                 )
-                            })}
+                            })
+                            }
                         </CardContent>
                     </Grid>
                     <Grid item xs={4}>
@@ -92,9 +93,9 @@ export default function Task({ task, done }) {
                 <CardActions>
                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
                         {done ?
-                            "Finalizado em: " + new Date(task.finishedAt * 1000).toLocaleString()
+                            "Finalizado em: " + new Date(task.finishedAt).toLocaleString()
                             :
-                            "Criado em: " + new Date(task.createdAt * 1000).toLocaleString()
+                            "Criado em: " + new Date(task.createdAt).toLocaleString()
                         }
                     </Typography>
                 </CardActions>

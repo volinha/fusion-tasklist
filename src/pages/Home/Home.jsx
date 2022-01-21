@@ -1,11 +1,11 @@
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, List, ListItem, ListItemText } from '@mui/material';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Container from '../../components/Container/Container';
 import Task from '../../components/Task/Task';
 
 const Home = () => {
-    const tasks = useSelector(state => state.tasks.taskList);
+    const tasks = useSelector(state => state.tasks.items);
     const searchValue = useSelector(state => state.search.value);
 
     const filteredTasks = !!searchValue ? 

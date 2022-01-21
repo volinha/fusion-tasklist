@@ -8,9 +8,9 @@ const StyledLink = styled(Link)`
     margin-right: 32px !important;
 `
 
-const CustomButton = ({ content }) => {
+const CustomButton = ({ content, to }) => {
     return (
-        <StyledLink to="/new_task">
+        <StyledLink to={to}>
                 <Button variant="contained" role='button'>{content}</Button>
         </StyledLink>
     );

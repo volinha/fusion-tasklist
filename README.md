@@ -1,4 +1,4 @@
-# Lista de Tarefas
+# Lista de Tarefas 0.3
 
 Desenvolvido em plataforma React.
 
@@ -12,10 +12,10 @@ Criar um gerenciador de tarefas simplificado.
 - Redirecionamento para página de criação de novas tarefas;
 - Separação das tarefas por status;
 - Busca por atributos das tarefas disponíveis;
+- Migrar dados para armazenamento local (localStorage);
 
 ## Em desenvolvimento:
 
-- Migrar dados para armazenamento local (localStorage);
 - Apagar tarefas através do botão;
 - Concluir tarefas;
 - Permitir edição das tarefas;

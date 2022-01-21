@@ -1,4 +1,4 @@
-import { Button, Divider, FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, List, ListItem, ListItemText, MenuItem, Paper, Select, TextField } from '@mui/material';
+import { Button, Divider, FormControl, Grid, IconButton, Input, InputAdornment, InputLabel, List, ListItem, ListItemText, MenuItem, Paper, Select, Slider, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuid } from 'uuid';
@@ -26,18 +26,19 @@ const NewTask = () => {
         setPriority(e.target.value);
     };
 
-    function handleTag(e) {
+    const handleTag = (e) => {
         setTag(e.target.value);
     }
 
     function handleAddTag() {
+        if(!tag) return alert("Não é possível enviar uma tag vazia!");
         dispatch(TagActions.AddTagList(uuid(), tag));
         setTag('');
         document.getElementById('input-text-tag').focus();
     }
 
     function sendTask() {
-        if (!title || !priority) return alert("preencha todos os campos")
+        if (!title || !priority) return alert("Preencha todos os campos!")
         const task = {
             id: uuid(),
             title: title,
@@ -49,6 +50,7 @@ const NewTask = () => {
             comments: '',
         }
         dispatch(TaskActions.AddTask(task));
+        dispatch(TagActions.ClearTagList());
     }
 
     return (
@@ -59,8 +61,6 @@ const NewTask = () => {
                     columns={12}
                     spacing={4}
                     direction="column"
-                    onChange={handleTitle}
-                    value={title}
                 >
                     <Grid item xs={4}>
                         <TextField
@@ -68,6 +68,8 @@ const NewTask = () => {
                             label="Título"
                             variant="standard"
                             fullWidth
+                            onChange={handleTitle}
+                            value={title}
                         />
                     </Grid>
                     <Grid item xs={4}>
@@ -102,6 +104,7 @@ const NewTask = () => {
                                         <IconButton
                                             aria-label="add tag to list"
                                             onClick={() => handleAddTag()}
+                                            id="add-tag-button"
                                         >
                                             <AddBoxIcon />
                                         </IconButton>
@@ -112,7 +115,8 @@ const NewTask = () => {
                     </Grid>
                     <Grid item xs={4}>
                         <Paper elevation={6}>
-                            <h3 style={{ margin: '2px' }}>Lista de Tags:</h3> <Divider />
+                        <Typography variant="h5" component="div">Tags:</Typography>
+                        <Divider />
                             <List>
                                 {tagsArray.tags.map((item, index) => {
                                     return (
@@ -134,9 +138,7 @@ const NewTask = () => {
                         </Paper>
                     </Grid>
                     <Grid item xs={4}>
-                        <Button variant="outlined" onClick={() => sendTask()}>addtask</Button>
-                        <Button variant="outlined" onClick={() => console.log(tasksArray)}>taskarray</Button>
-                        <Button variant="outlined" onClick={() => console.log(tagsArray)}>tagsarray</Button>
+                        <Button variant="outlined" onClick={() => sendTask()}>Adicionar Tarefa</Button>
                     </Grid>
                 </Grid>
             </Grid>

@@ -1,6 +1,8 @@
-import react from 'react';
+import { useDispatch } from 'react-redux';
+import TaskActions from '../store/actions/tasks';
+import DialogActionsRedux from '../store/actions/dialog';
 
-import { Grid } from '@mui/material';
+import { Chip, Grid, Tooltip } from '@mui/material';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -16,7 +18,10 @@ import CheckIcon from '@mui/icons-material/Check';
 import DeleteIcon from '@mui/icons-material/Delete';
 import CommentIcon from '@mui/icons-material/Comment';
 
-const Tags = styled.button`
+import OpenDialog from '../Dialog/Dialog';
+import { useSelector } from 'react-redux';
+
+/* const Tags = styled.button`
     font-family: "Roboto", Helvetica;
     font-size: 14px;
     font-weight: 600;
@@ -36,7 +41,7 @@ const Tags = styled.button`
     border: none;
 
     cursor: pointer;
-`
+` */
 
 const CardButtons = styled(Button)`
     width: 100%;
@@ -47,8 +52,16 @@ const CardButtons = styled(Button)`
 `
 
 export default function Task({ task, done }) {
+
+    const dispatch = useDispatch();
+
+    const allTasks = useSelector(state => state.tasks.items);
+
     return (
         <Box style={{ marginTop: '8px' }}>
+            <OpenDialog
+                type="delete-task"
+            />
             <Card variant="outlined" >
                 <Grid container columns={12}>
                     <Grid item xs={8}>
@@ -61,9 +74,13 @@ export default function Task({ task, done }) {
                             </Typography>
                             {task.tags.map((item, index) => {
                                 return (
-                                    <Tags key={index}>
-                                        <WarningIcon fontSize="small" />{item.value}
-                                    </Tags>
+                                    <Chip
+                                        key={index}
+                                        label={item.value}
+                                        onClick={() => console.log("click")}
+                                        icon={<WarningIcon fontSize="small" />}
+                                        style={{marginTop: '2px'}}
+                                    />
                                 )
                             })
                             }
@@ -73,16 +90,36 @@ export default function Task({ task, done }) {
                         <Grid container direction="column" alignItems="flex-end" spacing={6} >
                             <Grid item>
                                 <Button>
-                                    {done ? <CommentIcon /> : <EditIcon />}
+                                    {done ? 
+                                    <CommentIcon onClick={() => dispatch(DialogActionsRedux.OpenDialog(task.id, task.title, 'viewComment'))} />
+                                    : 
+                                    <EditIcon />}
                                 </Button>
                             </Grid>
                             <Grid item>
                                 {done ?
-                                    <CardButtons variant="contained" color="info"><CheckIcon />Finalizada</CardButtons>
+                                    <CardButtons
+                                        color="info"
+                                        sx={{ cursor: 'default' }}
+                                    >
+                                        <CheckIcon />Finalizada
+                                    </CardButtons>
                                     :
                                     <>
-                                        <CardButtons variant="contained" color="success"><CheckIcon />Concluir</CardButtons>
-                                        <CardButtons variant="contained" color="error"><DeleteIcon />Cancelar</CardButtons>
+                                        <CardButtons
+                                            variant="contained"
+                                            color="success"
+                                            onClick={() => dispatch(DialogActionsRedux.OpenDialog(task.id, task.title, 'finishtask'))}
+                                        >
+                                            <CheckIcon />Concluir
+                                        </CardButtons>
+                                        <CardButtons
+                                            variant="contained"
+                                            color="error"
+                                            onClick={() => dispatch(DialogActionsRedux.OpenDialog(task.id, task.title, 'task'))}
+                                        >
+                                            <DeleteIcon />Cancelar
+                                        </CardButtons>
                                     </>
                                 }
 

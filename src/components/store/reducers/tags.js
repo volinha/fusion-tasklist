@@ -1,8 +1,8 @@
 const INITIAL_STATE = {
-    tags:[]
+    tags:  []
 }
 
-export default function tag(state = INITIAL_STATE, action) {
+export default function tags(state = INITIAL_STATE, action) {
     switch (action.type) {
         case 'TAG_ADD':
             return {...state, tags: [...state.tags, {id: action.id, value: action.value}]}

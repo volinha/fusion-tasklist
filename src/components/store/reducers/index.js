@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux';
 
-import tasks from './tasks';
-import search from './search';
-import tags from './tags';
+import tasksReducer from './tasks';
+import searchReducer from './search';
+import tagsReducer from './tags';
 
 export default combineReducers({
-    tasks,
-    search,
-    tags
+    tasks: tasksReducer,
+    search: searchReducer,
+    tags: tagsReducer
 })

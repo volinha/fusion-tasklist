@@ -12,10 +12,11 @@ Criar um gerenciador de tarefas simplificado.
 - Redirecionamento para página de criação de novas tarefas;
 - Separação das tarefas por status;
 - Busca por atributos das tarefas disponíveis;
-- Migrar dados para armazenamento local (localStorage);
+- Dados no armazenamento local (localStorage);
 - Apagar tarefas através do botão;
 - Concluir tarefas;
 - Comentários em tarefas concluídas;
+
 ## Em desenvolvimento:
 
 - Permitir edição das tarefas;

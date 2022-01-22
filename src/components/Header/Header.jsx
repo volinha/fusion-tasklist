@@ -1,4 +1,4 @@
-import { Box, Grid, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
 import CustomButton from '../Button/CustomButton';
@@ -7,6 +7,7 @@ import SearchIcon from '@mui/icons-material/Search';
 
 import { useDispatch } from 'react-redux';
 import searchAction from '../store/actions/search';
+import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
     width: 100vw;
@@ -25,6 +26,23 @@ const HeaderTitle = styled.h1`
     font-family: Roboto;
 `
 
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: 'black';
+
+    transition: ease all 0.5s;
+
+    &:link {
+        color: black;
+    };
+    &:visited {
+        color: black;
+    }
+    &:hover{
+        color: rgba(0,0,0,0.6);
+    }
+`
+
 const Header = ({ children, title }) => {
 
     const dispatch = useDispatch();
@@ -37,7 +55,7 @@ const Header = ({ children, title }) => {
                 justifyContent="space-around"
                 alignItems="center"
             >
-                <HeaderTitle>{title}</HeaderTitle>
+                <StyledLink to="/"><HeaderTitle>{title}</HeaderTitle></StyledLink>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <SearchIcon sx={{ mr: 1, my: 0.5 }} />
                     <TextField 
@@ -48,14 +66,7 @@ const Header = ({ children, title }) => {
                         onChange={(e) => dispatch(searchAction.SearchTextUpdate(e.target.value))}
                     />
                 </Box>
-                <CustomButton
-                    content="+ Tarefa"
-                    to="/new_task"
-                />
-                <CustomButton
-                    content="Ver Tarefas"
-                    to="/"
-                />
+                <StyledLink to="/new_task"><Button variant="filled">+ Tarefa</Button></StyledLink>
             </Grid>
         </HeaderWrapper>
     );

@@ -11,10 +11,11 @@ export default function tasks(state = INITIAL_STATE, action) {
                     title: action.payload.title,
                     status: action.payload.status,
                     priority: action.payload.priority,
-                    createdAt: Date.now(),
+                    createdAt: action.payload.createdAt,
                     finishedAt: action.payload.finishedAt,
                     tags: action.payload.tags,
                     comments: action.payload.comments,
+                    date: action.payload.date
                 }]
             };
         case 'TASK_REMOVE':

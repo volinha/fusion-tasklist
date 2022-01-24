@@ -50,6 +50,7 @@ const NewTask = () => {
 
   useEffect(() => {
     dispatch(TagActions.ClearTagList());
+    setIsEdit(false);
 
     if (!id) return 0;
     var allTasks = JSON.parse(localStorage.getItem("persistantState")).tasks
@@ -100,17 +101,19 @@ const NewTask = () => {
 
   function sendTask() {
     if (!title || !priority) return alert("Preencha todos os campos!");
+    
     const task = {
-      id: uuid(),
+      id: isEdit ? id : uuid(),
       title: title,
       status: "open",
       priority: priority,
       createdAt: Date.now(),
+      edit: isEdit ? Date.now() : null,
       tags: tagsArray.tags,
       date: date,
     };
 
-    dispatch(TaskActions.AddTask(task));
+    isEdit ? dispatch(TaskActions.EditTask(task)) : dispatch(TaskActions.AddTask(task));
     dispatch(TagActions.ClearTagList());
     setTitle("");
     setPriority("");

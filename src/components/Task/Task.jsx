@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 
 import styled from "styled-components";
 
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -34,10 +34,10 @@ export default function Task({ task, done }) {
   const dispatch = useDispatch();
 
   const colorSelector = (priority) => {
-      if(priority === 'urgente') return '#f44336'
-      if(priority === 'importante') return '#ff9800'
-      if(priority === 'normal') return '#4caf50'
-  } 
+    if (priority === "urgente") return "#f44336";
+    if (priority === "importante") return "#ff9800";
+    if (priority === "normal") return "#4caf50";
+  };
 
   return (
     <Box style={{ marginTop: "8px" }}>
@@ -50,23 +50,23 @@ export default function Task({ task, done }) {
                 {task.title}
               </Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
-              <Button
-                variant="outlined"
-                disabled={task.status === 'done'}
-                sx={{
-                  color: `${colorSelector(task.priority) + "99"}`,
-                  borderColor: `${colorSelector(task.priority) + "99"}`,
-                  height: "1.5em",
-                  minWidth: "1.5em",
-                  textTransform: "lowercase",
-                  '&:hover': {
-                    color: `${colorSelector(task.priority)}`,
-                    borderColor: `${colorSelector(task.priority)}`,
-                  }
-                }}
-              >
-                {task.priority}
-              </Button>
+                <Button
+                  variant="outlined"
+                  disabled={task.status === "done"}
+                  sx={{
+                    color: `${colorSelector(task.priority) + "99"}`,
+                    borderColor: `${colorSelector(task.priority) + "99"}`,
+                    height: "1.5em",
+                    minWidth: "1.5em",
+                    textTransform: "lowercase",
+                    "&:hover": {
+                      color: `${colorSelector(task.priority)}`,
+                      borderColor: `${colorSelector(task.priority)}`,
+                    },
+                  }}
+                >
+                  {task.priority}
+                </Button>
                 {done
                   ? ""
                   : " - até " +
@@ -80,7 +80,7 @@ export default function Task({ task, done }) {
                     onClick={() => console.log("click-tag-" + item.value)}
                     icon={<ArrowRightIcon fontSize="small" />}
                     style={{ marginTop: "2px" }}
-                    disabled={task.status === 'done'}
+                    disabled={task.status === "done"}
                   />
                 );
               })}
@@ -108,7 +108,18 @@ export default function Task({ task, done }) {
                       }
                     />
                   ) : (
-                    <Link to={`/edit_task/${task.id}`}><EditIcon /></Link>
+                    <Tooltip
+                      title={
+                        task.edit
+                          ? "Última edição: " +
+                            new Date(task.edit).toLocaleString()
+                          : "Não possui histórico de edição."
+                      }
+                    >
+                      <Link to={`/edit_task/${task.id}`}>
+                        <EditIcon />
+                      </Link>
+                    </Tooltip>
                   )}
                 </Button>
               </Grid>

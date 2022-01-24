@@ -19,7 +19,10 @@ const HeaderWrapper = styled.div`
     justify-content: space-between;
     align-items: center;
 
-    background-color: #DDD;
+    background-color: var(--grey) !important;
+    color: var(--primary);
+
+    z-index: 100;
 
 `
 const HeaderTitle = styled.h1`
@@ -28,23 +31,22 @@ const HeaderTitle = styled.h1`
 
 const StyledLink = styled(Link)`
     text-decoration: none;
-    color: 'black';
+    color: var(--primary);
 
     transition: ease all 0.5s;
 
     &:link {
-        color: black;
+        color: color: var(--primary);;
     };
     &:visited {
-        color: black;
+        color: color: var(--primary);;
     }
     &:hover{
-        color: rgba(0,0,0,0.6);
+        color: color: var(--primary-alt);;
     }
 `
 
 const Header = ({ children, title }) => {
-
     const dispatch = useDispatch();
 
     return (

@@ -45,6 +45,7 @@ const NewTask = () => {
   const [date, setDate] = useState(new Date());
   const [tag, setTag] = useState("");
   const [isEdit, setIsEdit] = useState(false);
+  const [invalidId, setInvalidId] = useState(false);
 
   const [locale, setLocale] = useState("ptbr");
 
@@ -53,17 +54,19 @@ const NewTask = () => {
     setIsEdit(false);
 
     if (!id) return 0;
+    setIsEdit(true);
+
     var allTasks = JSON.parse(localStorage.getItem("persistantState")).tasks
       .items;
     const selectedTask = allTasks.filter((item) => {
       return id === item.id;
     });
-    if (selectedTask.length !== 1) return "A busca não retornou resultado.";
+
+    if (selectedTask.length !== 1) return setInvalidId(true);
 
     setTitle(selectedTask[0].title);
     setPriority(selectedTask[0].priority);
     setDate(selectedTask[0].date);
-    setIsEdit(true);
 
     selectedTask[0].tags.forEach((item) => {
       loadTagList(item.id, item.value);
@@ -101,7 +104,7 @@ const NewTask = () => {
 
   function sendTask() {
     if (!title || !priority) return alert("Preencha todos os campos!");
-    
+
     const task = {
       id: isEdit ? id : uuid(),
       title: title,
@@ -113,7 +116,9 @@ const NewTask = () => {
       date: date,
     };
 
-    isEdit ? dispatch(TaskActions.EditTask(task)) : dispatch(TaskActions.AddTask(task));
+    isEdit
+      ? dispatch(TaskActions.EditTask(task))
+      : dispatch(TaskActions.AddTask(task));
     dispatch(TagActions.ClearTagList());
     setTitle("");
     setPriority("");
@@ -123,110 +128,119 @@ const NewTask = () => {
   return (
     <Grid container columns={12} direction="row" style={{ margin: "16px" }}>
       <Grid item xs={4}>
-        <Grid container columns={12} spacing={4} direction="column">
-          <Grid item xs={4}>
-            <TextField
-              id="titulo-tarefa"
-              label="Título"
-              variant="standard"
-              fullWidth
-              onChange={handleTitle}
-              value={title}
-            />
-          </Grid>
-          <Grid item xs={4}>
-            <FormControl fullWidth>
-              <InputLabel id="id-select-prioridade">Prioridade</InputLabel>
-              <Select
-                labelId="id-select-prioridade"
-                id="select-prioridade"
-                value={priority}
-                label="Age"
-                variant="standard"
-                onChange={handlePriority}
-              >
-                <MenuItem value={"normal"}>Normal</MenuItem>
-                <MenuItem value={"importante"}>Importante</MenuItem>
-                <MenuItem value={"urgente"}>Urgente</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={4}>
-            <LocalizationProvider
-              dateAdapter={AdapterDateFns}
-              locale={localeMap[locale]}
-            >
-              <DesktopDatePicker
-                label="Data para finalizar"
-                value={date}
-                minDate={new Date()}
-                onChange={(newValue) => {
-                  setDate(newValue);
-                }}
-                renderInput={(params) => <TextField {...params} />}
-              />
-            </LocalizationProvider>
-          </Grid>
-          <Grid item xs={4}>
-            <FormControl sx={{ width: "100%" }} variant="standard">
-              <InputLabel htmlFor="input-text-tag">Tag</InputLabel>
-              <Input
-                id="input-text-tag"
-                type="text"
-                label="Tag"
-                value={tag}
-                onChange={handleTag}
-                fullWidth
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="add tag to list"
-                      onClick={() => handleAddTag()}
-                      id="add-tag-button"
-                    >
-                      <AddBoxIcon />
-                    </IconButton>
-                  </InputAdornment>
-                }
-              />
-            </FormControl>
-          </Grid>
-          {tagsArray.tags.length !== 0 && (
+        <Typography variant="h4">
+          {!isEdit
+            ? "Adicionando nova tarefa: "
+            : invalidId
+            ? "Tarefa não encontrada."
+            : "Editando tarefa '" + title + "':"}
+        </Typography>
+        {((isEdit && !invalidId) || !isEdit) && (
+          <Grid container columns={12} spacing={4} direction="column">
             <Grid item xs={4}>
-              <Paper elevation={6}>
-                <Typography variant="h5" component="div">
-                  Tags:
-                </Typography>
-                <Divider />
-                <List>
-                  {tagsArray.tags.map((item, index) => {
-                    return (
-                      <ListItem key={item.id}>
-                        <ListItemText>
-                          {index + 1 + " - " + item.value} <Divider />
-                        </ListItemText>
-                        <IconButton
-                          edge="end"
-                          aria-label="delete-tag"
-                          onClick={() =>
-                            dispatch(TagActions.RemoveTagList(item.id))
-                          }
-                        >
-                          <DeleteIcon />
-                        </IconButton>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </Paper>
+              <TextField
+                id="titulo-tarefa"
+                label="Título"
+                variant="standard"
+                fullWidth
+                onChange={handleTitle}
+                value={title}
+              />
             </Grid>
-          )}
-          <Grid item xs={4}>
-            <Button variant="outlined" onClick={() => sendTask()}>
-              Adicionar Tarefa
-            </Button>
+            <Grid item xs={4}>
+              <FormControl fullWidth>
+                <InputLabel id="id-select-prioridade">Prioridade</InputLabel>
+                <Select
+                  labelId="id-select-prioridade"
+                  id="select-prioridade"
+                  value={priority}
+                  label="Age"
+                  variant="standard"
+                  onChange={handlePriority}
+                >
+                  <MenuItem value={"normal"}>Normal</MenuItem>
+                  <MenuItem value={"importante"}>Importante</MenuItem>
+                  <MenuItem value={"urgente"}>Urgente</MenuItem>
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <LocalizationProvider
+                dateAdapter={AdapterDateFns}
+                locale={localeMap[locale]}
+              >
+                <DesktopDatePicker
+                  label="Data para finalizar"
+                  value={date}
+                  minDate={new Date()}
+                  onChange={(newValue) => {
+                    setDate(newValue);
+                  }}
+                  renderInput={(params) => <TextField {...params} />}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={4}>
+              <FormControl sx={{ width: "100%" }} variant="standard">
+                <InputLabel htmlFor="input-text-tag">Tag</InputLabel>
+                <Input
+                  id="input-text-tag"
+                  type="text"
+                  label="Tag"
+                  value={tag}
+                  onChange={handleTag}
+                  fullWidth
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="add tag to list"
+                        onClick={() => handleAddTag()}
+                        id="add-tag-button"
+                      >
+                        <AddBoxIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </FormControl>
+            </Grid>
+            {tagsArray.tags.length !== 0 && (
+              <Grid item xs={4}>
+                <Paper elevation={6}>
+                  <Typography variant="h5" component="div">
+                    Tags:
+                  </Typography>
+                  <Divider />
+                  <List>
+                    {tagsArray.tags.map((item, index) => {
+                      return (
+                        <ListItem key={item.id}>
+                          <ListItemText>
+                            {index + 1 + " - " + item.value} <Divider />
+                          </ListItemText>
+                          <IconButton
+                            edge="end"
+                            aria-label="delete-tag"
+                            onClick={() =>
+                              dispatch(TagActions.RemoveTagList(item.id))
+                            }
+                          >
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Paper>
+              </Grid>
+            )}
+            <Grid item xs={4}>
+              <Button variant="outlined" onClick={() => sendTask()}>
+                {isEdit ? "Editar Tarefa" : "Adicionar Tarefa"}
+              </Button>
+            </Grid>
           </Grid>
-        </Grid>
+        )}
       </Grid>
     </Grid>
   );

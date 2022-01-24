@@ -108,7 +108,8 @@ export default function Task({ task, done }) {
                       }
                     />
                   ) : (
-                    <Tooltip
+                    <Tooltip 
+                      arrow
                       title={
                         task.edit
                           ? "Última edição: " +

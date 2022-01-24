@@ -14,6 +14,10 @@ const MainRoutes = () => {
                 path="/new_task"
                 element={<NewTask />}
             />
+            <Route 
+                path="/edit_task/:id"
+                element={<NewTask />}
+            />
         </Routes>
         )
 }

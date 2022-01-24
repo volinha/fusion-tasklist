@@ -20,28 +20,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 
 import OpenDialog from "../Dialog/Dialog";
 import { useSelector } from "react-redux";
-
-/* const Tags = styled.button`
-    font-family: "Roboto", Helvetica;
-    font-size: 14px;
-    font-weight: 600;
-
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-
-    margin-top: 4px;
-    padding: 2px 8px;
-
-    background-color: #AAA;
-    color: #333;
-
-    border-radius: 15px;
-    border: none;
-
-    cursor: pointer;
-` */
+import { Link } from "react-router-dom";
 
 const CardButtons = styled(Button)`
   width: 100%;
@@ -98,7 +77,7 @@ export default function Task({ task, done }) {
                   <Chip
                     key={index}
                     label={item.value}
-                    onClick={() => console.log("click")}
+                    onClick={() => console.log("click-tag-" + item.value)}
                     icon={<ArrowRightIcon fontSize="small" />}
                     style={{ marginTop: "2px" }}
                     disabled={task.status === 'done'}
@@ -129,7 +108,7 @@ export default function Task({ task, done }) {
                       }
                     />
                   ) : (
-                    <EditIcon onClick={() => console.log(task.tags)} />
+                    <Link to={`/edit_task/${task.id}`}><EditIcon /></Link>
                   )}
                 </Button>
               </Grid>

@@ -17,13 +17,14 @@ Criar um gerenciador de tarefas simplificado.
 - Concluir tarefas;
 - Comentários em tarefas concluídas;
 - Adicionar data para finalizar;
+- Permitir edição das tarefas;
 ## Em desenvolvimento:
 
-- Permitir edição das tarefas;
-- Permitir edição das tags e prioridade;
+- Permitir edição das tags por modal/dialog;
+- Permitir edição da prioridade por modal/dialog;
 # Versão
 
-0.6
+0.8
 
 ### 💻 Desenvolvido por Vinícius Fernandes
 

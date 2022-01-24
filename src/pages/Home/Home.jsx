@@ -1,12 +1,23 @@
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import Task from "../../components/Task/Task";
 
+import TagActions from "../../components/store/actions/tags";
+import DialogActionsRedux from '../../components/store/actions/dialog';
+
+import { useDispatch } from "react-redux";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  background: var(--primary);
+`
+
 const Home = () => {
   const tasks = useSelector((state) => state.tasks.items);
   const searchValue = useSelector((state) => state.search.value);
+  const dispatch = useDispatch();
 
   const filteredTasks = !!searchValue
     ? tasks.filter((task) => {
@@ -26,6 +37,11 @@ const Home = () => {
   var doneTasks = filteredTasks.filter((item) => {
     return item.status === "done";
   });
+
+  useEffect(() => {
+    dispatch(TagActions.ClearTagList());
+    dispatch(DialogActionsRedux.CloseDialog());
+  },[])
 
   return (
     <div>

@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import TaskActions from "../store/actions/tasks.action";
 import DialogActionsRedux from "../store/actions/dialog.action";
 
 import { Chip, Grid, Tooltip } from "@mui/material";
@@ -19,7 +18,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CommentIcon from "@mui/icons-material/Comment";
 
 import OpenDialog from "../Dialog/Dialog";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 const CardButtons = styled(Button)`

@@ -8,11 +8,6 @@ import TagActions from "../../components/store/actions/tags.action";
 import DialogActionsRedux from '../../components/store/actions/dialog.action';
 
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
-
-const Wrapper = styled.div`
-  background: var(--primary);
-`
 
 const Home = () => {
   const tasks = useSelector((state) => state.tasks.items);
@@ -41,6 +36,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(TagActions.ClearTagList());
     dispatch(DialogActionsRedux.CloseDialog());
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[])
 
   return (

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -7,14 +7,19 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { useDispatch, useSelector } from "react-redux";
-import DialogActionsRedux from "../store/actions/dialog";
-import TaskActions from "../store/actions/tasks";
-import TagActions from "../store/actions/tags";
-import { TextField } from "@mui/material";
+import DialogActionsRedux from "../store/actions/dialog.action";
+import TaskActions from "../store/actions/tasks.action";
+import TagActions from "../store/actions/tags.action";
+import FormsActions from "../store/actions/forms.action";
+import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { TaskComment, TaskPriority, TaskTagEdit } from "../Forms/Forms";
 
 export default function OpenDialog() {
   const dialogData = useSelector((state) => state.dialog.value[0]);
   const taskData = useSelector((state) => state.tasks.items);
+  const comment = useSelector((state) => state.forms.comment);
+  const tagText = useSelector((state) => state.forms.tag);
+  const priority = useSelector((state) => state.forms.priority);
 
   const taskComment = taskData.filter((item) => {
     return item.id.includes(dialogData.id);
@@ -22,8 +27,6 @@ export default function OpenDialog() {
 
   const dispatch = useDispatch();
 
-  const [comments, setComments] = useState("");
-  const [tagText, setTagText] = useState("");
 
   const handleDelete = (type) => {
     if (type === "task-delete") dispatch(TaskActions.RemoveTask(dialogData.id));
@@ -33,23 +36,26 @@ export default function OpenDialog() {
   };
 
   const handleFinish = () => {
-    dispatch(TaskActions.FinishTask(dialogData.id, comments));
-    return dispatch(DialogActionsRedux.CloseDialog());
-  };
-
-  const handleComments = (e) => {
-    setComments(e.target.value);
-  };
-
-  const handleTagsText = (e) => {
-    setTagText(e.target.value);
+    dispatch(TaskActions.FinishTask(dialogData.id, comment));
+    dispatch(DialogActionsRedux.CloseDialog());
+    dispatch(FormsActions.UpdateState({ form: "RESET" }));
   };
 
   const handleEditTag = (taskId, tagId, text) => {
     dispatch(TaskActions.EditTag(taskId, tagId, text));
-    setTagText("");
+    dispatch(DialogActionsRedux.CloseDialog());
+    dispatch(FormsActions.UpdateState({ form: "RESET" }));
+  };
+
+  const handleEditPriority = (taskId, title, priority) => {
+    dispatch(TaskActions.EditPriority(taskId, title, priority));
     return dispatch(DialogActionsRedux.CloseDialog());
-  }
+  };
+
+  const handleCloseDialog = () => {
+    dispatch(DialogActionsRedux.CloseDialog());
+    dispatch(FormsActions.UpdateState({ form: "RESET" }));
+  };
 
   return (
     <div>
@@ -57,13 +63,11 @@ export default function OpenDialog() {
         <>
           <Dialog
             open={dialogData.open}
-            onClose={() => {
-              dispatch(DialogActionsRedux.CloseDialog());
-            }}
+            onClose={handleCloseDialog}
             aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
-          >
-            {(dialogData.module === "tag-delete" || dialogData.module === "task-delete") && (
+            aria-describedby="alert-dialog-description">
+            {(dialogData.module === "tag-delete" ||
+              dialogData.module === "task-delete") && (
               <>
                 <DialogTitle id="alert-dialog-title">
                   {"Deseja remover '" + dialogData.title + "' ?"}
@@ -71,20 +75,18 @@ export default function OpenDialog() {
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
                     Confirme para remover a
-                    {dialogData.module === "task-delete" ? " tarefa" : " tag"}.<br />
+                    {dialogData.module === "task-delete" ? " tarefa" : " tag"}.
+                    <br />
                     Essa ação não pode ser revertida!
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button
-                    onClick={() => dispatch(DialogActionsRedux.CloseDialog())}
-                  >
+                  <Button onClick={() => dispatch(DialogActionsRedux.CloseDialog())}>
                     Não
                   </Button>
                   <Button
-                    onClick={() => handleDelete(dialogData.module)}
-                    autoFocus
-                  >
+                    onClick={() => handleDelete(dialogData.module, comment)}
+                    autoFocus>
                     Sim
                   </Button>
                 </DialogActions>
@@ -97,29 +99,13 @@ export default function OpenDialog() {
                   {"Concluindo tarefa '" + dialogData.title + "':"}
                 </DialogTitle>
                 <DialogContent>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="comment"
-                    label="Comentário"
-                    type="text"
-                    fullWidth
-                    multiline
-                    variant="standard"
-                    value={comments}
-                    onChange={handleComments}
-                  />
+                  <TaskComment />
                 </DialogContent>
                 <DialogActions>
-                  <Button
-                    onClick={() => dispatch(DialogActionsRedux.CloseDialog())}
-                  >
+                  <Button onClick={() => dispatch(DialogActionsRedux.CloseDialog())}>
                     Cancelar
                   </Button>
-                  <Button
-                    onClick={() => handleFinish(dialogData.module)}
-                    autoFocus
-                  >
+                  <Button onClick={() => handleFinish(dialogData.module)} autoFocus>
                     Finalizar
                   </Button>
                 </DialogActions>
@@ -132,29 +118,40 @@ export default function OpenDialog() {
                   {"Editando tag '" + dialogData.title + "':"}
                 </DialogTitle>
                 <DialogContent>
-                  <TextField
-                    autoFocus
-                    margin="dense"
-                    id="comment"
-                    label="Nova descrição"
-                    type="text"
-                    fullWidth
-                    multiline
-                    variant="standard"
-                    value={tagText}
-                    onChange={handleTagsText}
-                  />
+                  <TaskTagEdit />
                 </DialogContent>
                 <DialogActions>
-                  <Button
-                    onClick={() => dispatch(DialogActionsRedux.CloseDialog())}
-                  >
+                  <Button onClick={() => dispatch(DialogActionsRedux.CloseDialog())}>
                     Cancelar
                   </Button>
                   <Button
-                    onClick={() => handleEditTag(dialogData.taskid, dialogData.id, tagText)}
                     autoFocus
-                  >
+                    onClick={() =>
+                      handleEditTag(dialogData.taskid, dialogData.id, tagText)
+                    }>
+                    Finalizar
+                  </Button>
+                </DialogActions>
+              </>
+            )}
+
+            {dialogData.module === "priority-edit" && (
+              <>
+                <DialogTitle id="alert-dialog-title">
+                  {"Editando prioridade da tarefa '" + dialogData.title + "':"}
+                </DialogTitle>
+                <DialogContent>
+                  <TaskPriority />
+                </DialogContent>
+                <DialogActions>
+                  <Button onClick={() => dispatch(DialogActionsRedux.CloseDialog())}>
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={() =>
+                      handleEditPriority(dialogData.id, dialogData.title, priority)
+                    }
+                    autoFocus>
                     Finalizar
                   </Button>
                 </DialogActions>
@@ -168,13 +165,13 @@ export default function OpenDialog() {
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    {taskComment[0].comments !== "" ? taskComment[0].comments : "Não há comentários."}
+                    {taskComment[0].comments !== ""
+                      ? taskComment[0].comments
+                      : "Não há comentários."}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                  <Button
-                    onClick={() => dispatch(DialogActionsRedux.CloseDialog())}
-                  >
+                  <Button onClick={() => dispatch(DialogActionsRedux.CloseDialog())}>
                     Voltar
                   </Button>
                 </DialogActions>

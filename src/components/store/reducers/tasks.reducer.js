@@ -64,10 +64,28 @@ export default function tasks(state = INITIAL_STATE, action) {
         ...state,
         items: state.items.map((task) =>
           task.id === action.taskId
-            ? { ...task, tags: task.tags.map((tag) => tag.id === action.tagId
-                    ? {...tag, value: action.value} 
-                    : tag)}
+            ? {
+                ...task,
+                tags: task.tags.map((tag) =>
+                  tag.id === action.tagId
+                    ? { ...tag, value: action.value }
+                    : tag
+                ),
+              }
             : task
+        ),
+      };
+    case "TASK_EDITPRIORITY":
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.id === action.id
+            ? {
+                ...item,
+                priority: action.value,
+                editedAt: Date.now(),
+              }
+            : item
         ),
       };
     default:

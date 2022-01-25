@@ -6,7 +6,7 @@ import CustomButton from '../Button/CustomButton';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { useDispatch } from 'react-redux';
-import searchAction from '../store/actions/search';
+import searchAction from '../store/actions/search.action';
 import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`

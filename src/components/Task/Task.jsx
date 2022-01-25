@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
-import TaskActions from "../store/actions/tasks";
-import DialogActionsRedux from "../store/actions/dialog";
+import TaskActions from "../store/actions/tasks.action";
+import DialogActionsRedux from "../store/actions/dialog.action";
 
 import { Chip, Grid, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
@@ -53,6 +53,7 @@ export default function Task({ task, done }) {
                 <Button
                   variant="outlined"
                   disabled={task.status === "done"}
+                  onClick={() => dispatch(DialogActionsRedux.OpenDialog(task.id,task.title,'priority-edit'))}
                   sx={{
                     color: `${colorSelector(task.priority) + "99"}`,
                     borderColor: `${colorSelector(task.priority) + "99"}`,

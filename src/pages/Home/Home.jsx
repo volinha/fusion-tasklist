@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import Task from "../../components/Task/Task";
 
-import TagActions from "../../components/store/actions/tags";
-import DialogActionsRedux from '../../components/store/actions/dialog';
+import TagActions from "../../components/store/actions/tags.action";
+import DialogActionsRedux from '../../components/store/actions/dialog.action';
 
 import { useDispatch } from "react-redux";
 import styled from "styled-components";

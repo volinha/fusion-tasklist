@@ -44,6 +44,15 @@ const EditTag = (taskId, tagId, text) => {
         }
 }
 
+const EditPriority = (id, title, value) => {
+    return {
+        type: 'TASK_EDITPRIORITY',
+        id: id,
+        title: title,
+        value: value
+    }
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     AddTask,
@@ -51,6 +60,7 @@ export default {
     EditTask,
     FinishTask,
     RemoveTag,
-    EditTag
+    EditTag,
+    EditPriority
 }
 

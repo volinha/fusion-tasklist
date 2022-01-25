@@ -1,7 +1,6 @@
 import { Box, Button, Grid, TextField } from '@mui/material';
 import React from 'react';
 import styled from 'styled-components';
-import CustomButton from '../Button/CustomButton';
 
 import SearchIcon from '@mui/icons-material/Search';
 
@@ -10,20 +9,26 @@ import searchAction from '../store/actions/search.action';
 import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
-    width: 100vw;
-    height: 8vh;
+    min-width: 100%;
+    min-height: (20% 1vh);
 
     display: flex;
     flex-direction: row;
+    padding: 10px;
+
+    @media (min-width: 320px) {
+        flex-direction: column;
+    }
 
     justify-content: space-between;
     align-items: center;
 
-    background-color: var(--grey) !important;
+    background-color: var(--gray) !important;
     color: var(--primary);
 
     z-index: 100;
 
+    font-size: clamp(0.5rem, 0.5rem + 1vw, 7rem);
 `
 const HeaderTitle = styled.h1`
     font-family: Roboto;
@@ -46,6 +51,14 @@ const StyledLink = styled(Link)`
     }
 `
 
+const StyledSearchBox = styled(TextField)`
+    display: grid;
+    
+    @media screen and (max-width: 767px) {
+        width: 50%;
+    }
+`
+
 const Header = ({ children, title }) => {
     const dispatch = useDispatch();
 
@@ -60,7 +73,7 @@ const Header = ({ children, title }) => {
                 <StyledLink to="/"><HeaderTitle>{title}</HeaderTitle></StyledLink>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <SearchIcon sx={{ mr: 1, my: 0.5 }} />
-                    <TextField 
+                    <StyledSearchBox 
                         type="search" 
                         id="search-textfield" 
                         label="Encontrar" 

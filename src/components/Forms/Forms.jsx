@@ -18,7 +18,6 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import ptbrLocale from "date-fns/locale/pt-BR";
-import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
@@ -50,6 +49,7 @@ const TaskTitle = (id) => {
 
     dispatch(FormsActions.UpdateState({ form: "TITLE", value: selectedTask[0].title }));
     return 0;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -57,7 +57,7 @@ const TaskTitle = (id) => {
       id="titulo-tarefa"
       label="Título"
       variant="standard"
-      fullWidth
+      /* fullWidth */
       onChange={(e) =>
         dispatch(FormsActions.UpdateState({ form: "TITLE", value: e.target.value }))
       }
@@ -96,7 +96,7 @@ const TaskPriority = () => {
 };
 
 const TaskDate = () => {
-  const [locale, setLocale] = useState("ptbr");
+  const locale = useState("ptbr");
   const dispatch = useDispatch();
   const date = useSelector((state) => state.forms.date);
 
@@ -211,6 +211,7 @@ const TagListLoad = (id) => {
       loadTagList(item.id, item.value);
     });
     return 0;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     const loadTagList = (id, tag) => {

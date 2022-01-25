@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import TaskActions from "../store/actions/tasks.action";
 import DialogActionsRedux from "../store/actions/dialog.action";
 
 import { Chip, Grid, Tooltip } from "@mui/material";
@@ -19,15 +18,22 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import CommentIcon from "@mui/icons-material/Comment";
 
 import OpenDialog from "../Dialog/Dialog";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+const CardStyle = {
+  backgroundColor: 'var(--grey)',
+}
+
 const CardButtons = styled(Button)`
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  width: 80%;
   margin: 4px -4px !important;
+  border: 1px solid red;
 
   font-family: "Roboto", Helvetica !important;
-  letter-spacing: 1px !important;
 `;
 
 export default function Task({ task, done }) {
@@ -41,8 +47,8 @@ export default function Task({ task, done }) {
 
   return (
     <Box style={{ marginTop: "8px" }}>
-      <OpenDialog type="delete-task" />
-      <Card variant="outlined">
+      <OpenDialog />
+      <Card sx={CardStyle} variant="outlined">
         <Grid container columns={12}>
           <Grid item xs={8}>
             <CardContent>
@@ -139,7 +145,7 @@ export default function Task({ task, done }) {
                   <>
                     <CardButtons color="info" sx={{ cursor: "default" }}>
                       <CheckIcon />
-                      Finalizada
+                      <div>Finalizada</div>
                     </CardButtons>
                     <CardButtons
                       variant="contained"

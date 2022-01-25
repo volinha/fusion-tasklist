@@ -9,8 +9,8 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Header title="Lista de Tarefas" />
         <Routes />
+        <Header title="Lista de Tarefas" />        
       </Router>
     </Provider>
   )

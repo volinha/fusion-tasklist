@@ -5,7 +5,6 @@ import styled from 'styled-components';
 
 const StyledLink = styled(Link)`
     text-decoration: none;
-    margin-right: 32px !important;
 `
 
 const CustomButton = ({ content, to }) => {

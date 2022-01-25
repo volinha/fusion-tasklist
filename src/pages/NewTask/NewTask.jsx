@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from "@mui/material";
+import { Button, Card, Divider, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
@@ -36,28 +36,30 @@ const NewTask = () => {
     if (!id) return 0;
     setIsEdit(true);
 
-    var allTasks = JSON.parse(localStorage.getItem("persistantState")).tasks
-      .items;
+    var allTasks = JSON.parse(localStorage.getItem("persistantState")).tasks.items;
     const selectedTask = allTasks.filter((item) => {
       return id === item.id;
     });
 
     if (selectedTask.length !== 1) return setInvalidId(true);
 
-    dispatch(FormActions.UpdateState({form: "TITLE", value: selectedTask[0].title}));
-    dispatch(FormActions.UpdateState({form: "PRIORITY", value: selectedTask[0].priority}));
-    dispatch(FormActions.UpdateState({form: "DATE", value: selectedTask[0].date}));
+    dispatch(FormActions.UpdateState({ form: "TITLE", value: selectedTask[0].title }));
+    dispatch(
+      FormActions.UpdateState({ form: "PRIORITY", value: selectedTask[0].priority })
+    );
+    dispatch(FormActions.UpdateState({ form: "DATE", value: selectedTask[0].date }));
 
     selectedTask[0].tags.forEach((item) => {
       loadTagList(item.id, item.value);
     });
 
     return 0;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadTagList = (id, tag) => {
     dispatch(TagActions.AddTagList(id, tag));
-  }
+  };
 
   function sendTask() {
     if (!title || !priority) return alert("Preencha todos os campos!");
@@ -73,48 +75,66 @@ const NewTask = () => {
       date: date,
     };
 
-    isEdit
-      ? dispatch(TaskActions.EditTask(task))
-      : dispatch(TaskActions.AddTask(task));
+    isEdit ? dispatch(TaskActions.EditTask(task)) : dispatch(TaskActions.AddTask(task));
 
     dispatch(FormsActions.UpdateState({ form: "RESET" }));
     dispatch(TagActions.ClearTagList());
   }
 
   return (
-    <Grid container columns={12} direction="row" style={{ margin: "16px" }}>
-      <Grid item xs={4}>
-        <Typography variant="h4">
-          {!isEdit
-            ? "Adicionando nova tarefa: "
-            : invalidId
-            ? "Tarefa não encontrada."
-            : "Editando tarefa '" + title +"':"}
-        </Typography>
-        <Grid container columns={12} spacing={4} direction="column">
-          <Grid item xs={4}>
-            <TaskTitle id={id ? id : ""} />
-          </Grid>
-          <Grid item xs={4}>
-            <TaskPriority />
-          </Grid>
-          <Grid item xs={4}>
-            <TaskDate />
-          </Grid>
-          <Grid item xs={4}>
-            <TaskTags />
-          </Grid>
-            <Grid item xs={4}>
-              <TagListLoad />
+    <>
+      <Grid
+        container
+        direction="column"
+        justifyContent="center"
+        alignItems="center"
+        columns={12}>
+        <Card variant="outlined" sx={{marginTop: '8px', padding: '4px 8px'}}>
+          
+          <Grid item xs={12}>
+          
+            <Grid
+              container
+              columns={12}
+              spacing={4}
+              direction="column"
+              justifyContent="center"
+              alignItems="flex-start">
+              <Grid item xs={6}>
+                <Typography variant="h4">
+                  {!isEdit
+                    ? "Adicionando nova tarefa: "
+                    : invalidId
+                    ? "Tarefa não encontrada."
+                    : "Editando tarefa '" + title + "':"}
+                </Typography>
+                <Divider />
+              </Grid>
+              <Grid item xs={12}>
+                <TaskTitle id={id ? id : ""}/>
+              </Grid>
+              <Grid item xs={12} sx={{ width: "54%" }}>
+                <TaskPriority />
+              </Grid>
+              <Grid item xs={12}>
+                <TaskDate />
+              </Grid>
+              <Grid item xs={12}>
+                <TaskTags />
+              </Grid>
+              <Grid item xs={12}>
+                <TagListLoad sx={{ width: "100%" }}/>
+              </Grid>
+              <Grid item xs={12}>
+                <Button variant="outlined" onClick={() => sendTask()}>
+                  {isEdit ? "Editar Tarefa" : "Adicionar Tarefa"}
+                </Button>
+              </Grid>
             </Grid>
-          <Grid item xs={4}>
-            <Button variant="outlined" onClick={() => sendTask()}>
-              {isEdit ? "Editar Tarefa" : "Adicionar Tarefa"}
-            </Button>
           </Grid>
-        </Grid>
+        </Card>
       </Grid>
-    </Grid>
+    </>
   );
 };
 

@@ -7,6 +7,16 @@ const OpenDialog = (id, title, module) => {
     }
 }
 
+const OpenDialogTag = (id, title, taskid, module) => {
+    return {
+        type: 'DIALOG_OPEN_TAG',
+        id: id,
+        taskid: taskid,
+        title: title,
+        module: module
+    }
+}
+
 const CloseDialog = () => {
     return {
         type: 'DIALOG_CLOSE',
@@ -16,6 +26,7 @@ const CloseDialog = () => {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     OpenDialog,
+    OpenDialogTag,
     CloseDialog
 }
 

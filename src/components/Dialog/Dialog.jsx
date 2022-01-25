@@ -23,9 +23,10 @@ export default function OpenDialog() {
   const dispatch = useDispatch();
 
   const [comments, setComments] = useState("");
+  const [tagText, setTagText] = useState("");
 
   const handleDelete = (type) => {
-    if (type === "task") dispatch(TaskActions.RemoveTask(dialogData.id));
+    if (type === "task-delete") dispatch(TaskActions.RemoveTask(dialogData.id));
     else dispatch(TagActions.RemoveTag(dialogData.id));
 
     return dispatch(DialogActionsRedux.CloseDialog());
@@ -40,6 +41,16 @@ export default function OpenDialog() {
     setComments(e.target.value);
   };
 
+  const handleTagsText = (e) => {
+    setTagText(e.target.value);
+  };
+
+  const handleEditTag = (taskId, tagId, text) => {
+    dispatch(TaskActions.EditTag(taskId, tagId, text));
+    setTagText("");
+    return dispatch(DialogActionsRedux.CloseDialog());
+  }
+
   return (
     <div>
       {dialogData.open && (
@@ -52,15 +63,15 @@ export default function OpenDialog() {
             aria-labelledby="alert-dialog-title"
             aria-describedby="alert-dialog-description"
           >
-            {(dialogData.module === "tag" || dialogData.module === "task") && (
+            {(dialogData.module === "tag-delete" || dialogData.module === "task-delete") && (
               <>
                 <DialogTitle id="alert-dialog-title">
                   {"Deseja remover '" + dialogData.title + "' ?"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Confirme para remover a{" "}
-                    {dialogData.module === "task" ? "tarefa" : "tag"}.<br />{" "}
+                    Confirme para remover a
+                    {dialogData.module === "task-delete" ? " tarefa" : " tag"}.<br />
                     Essa ação não pode ser revertida!
                   </DialogContentText>
                 </DialogContent>
@@ -80,10 +91,10 @@ export default function OpenDialog() {
               </>
             )}
 
-            {dialogData.module === "finishtask" && (
+            {dialogData.module === "task-finish" && (
               <>
                 <DialogTitle id="alert-dialog-title">
-                  {"Concluindo tarefa '" + dialogData.title + "'"}
+                  {"Concluindo tarefa '" + dialogData.title + "':"}
                 </DialogTitle>
                 <DialogContent>
                   <TextField
@@ -115,15 +126,49 @@ export default function OpenDialog() {
               </>
             )}
 
-            {dialogData.module === "viewComment" && (
+            {dialogData.module === "tag-edit" && (
+              <>
+                <DialogTitle id="alert-dialog-title">
+                  {"Editando tag '" + dialogData.title + "':"}
+                </DialogTitle>
+                <DialogContent>
+                  <TextField
+                    autoFocus
+                    margin="dense"
+                    id="comment"
+                    label="Nova descrição"
+                    type="text"
+                    fullWidth
+                    multiline
+                    variant="standard"
+                    value={tagText}
+                    onChange={handleTagsText}
+                  />
+                </DialogContent>
+                <DialogActions>
+                  <Button
+                    onClick={() => dispatch(DialogActionsRedux.CloseDialog())}
+                  >
+                    Cancelar
+                  </Button>
+                  <Button
+                    onClick={() => handleEditTag(dialogData.taskid, dialogData.id, tagText)}
+                    autoFocus
+                  >
+                    Finalizar
+                  </Button>
+                </DialogActions>
+              </>
+            )}
+
+            {dialogData.module === "comment-view" && (
               <>
                 <DialogTitle id="alert-dialog-view-comment">
                   {"Comentário da tarefa '" + dialogData.title + "':"}
                 </DialogTitle>
                 <DialogContent>
                   <DialogContentText>
-                    {taskComment[0].comments !== "" ? taskComment[0].comments : "Não há comentários."
-                    }
+                    {taskComment[0].comments !== "" ? taskComment[0].comments : "Não há comentários."}
                   </DialogContentText>
                 </DialogContent>
                 <DialogActions>

@@ -8,7 +8,7 @@ const AddTask = (value) => {
 const RemoveTask = (id) => {
     return {
         type: 'TASK_REMOVE',
-        id
+        id: id
     }
 }
 
@@ -30,9 +30,18 @@ const FinishTask = (id, comments) => {
 const RemoveTag = (tagId, taskId) => {
     return {
         type: 'TASK_REMOVETAG',
-        tagId,
-        taskId
+        tagId: tagId,
+        taskId: taskId
     }
+}
+
+const EditTag = (taskId, tagId, text) => {
+        return {
+            type: 'TASK_EDITTAG',
+            taskId: taskId,
+            tagId: tagId,
+            value: text
+        }
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -41,6 +50,7 @@ export default {
     RemoveTask,
     EditTask,
     FinishTask,
-    RemoveTag
+    RemoveTag,
+    EditTag
 }
 

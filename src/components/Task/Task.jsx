@@ -77,7 +77,16 @@ export default function Task({ task, done }) {
                   <Chip
                     key={index}
                     label={item.value}
-                    onClick={() => console.log("click-tag-" + item.value)}
+                    onClick={() => 
+                      dispatch(
+                        DialogActionsRedux.OpenDialogTag(
+                          item.id,
+                          item.value,
+                          task.id,
+                          "tag-edit"
+                        )
+                      )
+                    }
                     icon={<ArrowRightIcon fontSize="small" />}
                     style={{ marginTop: "2px" }}
                     disabled={task.status === "done"}
@@ -102,13 +111,13 @@ export default function Task({ task, done }) {
                           DialogActionsRedux.OpenDialog(
                             task.id,
                             task.title,
-                            "viewComment"
+                            "comment-view"
                           )
                         )
                       }
                     />
                   ) : (
-                    <Tooltip 
+                    <Tooltip
                       arrow
                       title={
                         task.edit
@@ -139,7 +148,7 @@ export default function Task({ task, done }) {
                           DialogActionsRedux.OpenDialog(
                             task.id,
                             task.title,
-                            "task"
+                            "task-delete"
                           )
                         )
                       }
@@ -158,7 +167,7 @@ export default function Task({ task, done }) {
                           DialogActionsRedux.OpenDialog(
                             task.id,
                             task.title,
-                            "finishtask"
+                            "task-finish"
                           )
                         )
                       }
@@ -174,7 +183,7 @@ export default function Task({ task, done }) {
                           DialogActionsRedux.OpenDialog(
                             task.id,
                             task.title,
-                            "task"
+                            "task-delete"
                           )
                         )
                       }

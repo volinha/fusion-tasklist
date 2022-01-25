@@ -32,15 +32,17 @@ export default function tasks(state = INITIAL_STATE, action) {
     case "TASK_EDIT":
       return {
         ...state,
-        items: state.items.map((item) => 
-            item.id === action.payload.id ? {
+        items: state.items.map((item) =>
+          item.id === action.payload.id
+            ? {
                 ...item,
                 title: action.payload.title,
                 priority: action.payload.priority,
                 date: action.payload.date,
                 tags: action.payload.tags,
                 edit: action.payload.edit,
-            } : item
+              }
+            : item
         ),
       };
     case "TASK_FINISH":
@@ -55,6 +57,17 @@ export default function tasks(state = INITIAL_STATE, action) {
                 comments: action.comments,
               }
             : item
+        ),
+      };
+    case "TASK_EDITTAG":
+      return {
+        ...state,
+        items: state.items.map((task) =>
+          task.id === action.taskId
+            ? { ...task, tags: task.tags.map((tag) => tag.id === action.tagId
+                    ? {...tag, value: action.value} 
+                    : tag)}
+            : task
         ),
       };
     default:

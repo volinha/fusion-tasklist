@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { v4 as uuid } from "uuid";
 import TagActions from "../../components/store/actions/tags.action";
+import FormActions from "../../components/store/actions/forms.action";
 
 import { useParams } from "react-router-dom";
 import {
@@ -28,21 +29,54 @@ const NewTask = () => {
   const [isEdit, setIsEdit] = useState(id ? true : false);
   const [invalidId, setInvalidId] = useState(false);
 
+  useEffect(() => {
+    dispatch(TagActions.ClearTagList());
+    setIsEdit(false);
+
+    if (!id) return 0;
+    setIsEdit(true);
+
+    var allTasks = JSON.parse(localStorage.getItem("persistantState")).tasks
+      .items;
+    const selectedTask = allTasks.filter((item) => {
+      return id === item.id;
+    });
+
+    if (selectedTask.length !== 1) return setInvalidId(true);
+
+    dispatch(FormActions.UpdateState({form: "TITLE", value: selectedTask[0].title}));
+    dispatch(FormActions.UpdateState({form: "PRIORITY", value: selectedTask[0].priority}));
+    dispatch(FormActions.UpdateState({form: "DATE", value: selectedTask[0].date}));
+
+    selectedTask[0].tags.forEach((item) => {
+      loadTagList(item.id, item.value);
+    });
+
+    return 0;
+  }, []);
+
+  const loadTagList = (id, tag) => {
+    dispatch(TagActions.AddTagList(id, tag));
+  }
+
   function sendTask() {
     if (!title || !priority) return alert("Preencha todos os campos!");
 
     const task = {
-      id: uuid(),
+      id: isEdit ? id : uuid(),
       title: title,
       status: "open",
       priority: priority,
       createdAt: Date.now(),
-      /* edit: isEdit ? Date.now() : null, */
+      edit: isEdit ? Date.now() : null,
       tags: tagsArray.tags,
       date: date,
     };
 
-    dispatch(TaskActions.AddTask(task));
+    isEdit
+      ? dispatch(TaskActions.EditTask(task))
+      : dispatch(TaskActions.AddTask(task));
+
     dispatch(FormsActions.UpdateState({ form: "RESET" }));
     dispatch(TagActions.ClearTagList());
   }
@@ -55,7 +89,7 @@ const NewTask = () => {
             ? "Adicionando nova tarefa: "
             : invalidId
             ? "Tarefa não encontrada."
-            : "Editando tarefa '" + /* title */ +"':"}
+            : "Editando tarefa '" + title +"':"}
         </Typography>
         <Grid container columns={12} spacing={4} direction="column">
           <Grid item xs={4}>

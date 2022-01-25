@@ -43,12 +43,11 @@ const Home = () => {
     <div>
       <Grid
         container
-        spacing={12}
+        spacing={6}
         columns={12}
         justifyContent="center"
-        direction="row"
       >
-        <Grid item xs={5}>
+        <Grid item xs={11} md={5}>
           <Container title="Abertas" quantity={openTasks.length}>
             {openTasks
               .slice(0)
@@ -58,7 +57,7 @@ const Home = () => {
               })}
           </Container>
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={11} md={5}>
           <Container title="Concluídas" quantity={doneTasks.length}>
             {doneTasks
               .slice(0)

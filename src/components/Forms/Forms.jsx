@@ -57,7 +57,7 @@ const TaskTitle = (id) => {
       id="titulo-tarefa"
       label="Título"
       variant="standard"
-      fullWidth
+      /* fullWidth */
       onChange={(e) =>
         dispatch(FormsActions.UpdateState({ form: "TITLE", value: e.target.value }))
       }

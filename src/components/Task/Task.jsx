@@ -1,4 +1,5 @@
 import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 import DialogActionsRedux from "../store/actions/dialog.action";
 
 import { Chip, Grid, Tooltip } from "@mui/material";
@@ -9,16 +10,13 @@ import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 
-import styled from "styled-components";
-
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckIcon from "@mui/icons-material/Check";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CommentIcon from "@mui/icons-material/Comment";
 
-import OpenDialog from "../Dialog/Dialog";
-import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 const CardStyle = {
   backgroundColor: 'var(--grey)',
@@ -46,7 +44,6 @@ export default function Task({ task, done }) {
 
   return (
     <Box style={{ marginTop: "8px" }}>
-      <OpenDialog />
       <Card sx={CardStyle} variant="outlined">
         <Grid container columns={12}>
           <Grid item xs={8}>

@@ -1,14 +1,15 @@
-import { Box, Button, Grid, TextField } from '@mui/material';
 import React from 'react';
-import styled from 'styled-components';
-
-import SearchIcon from '@mui/icons-material/Search';
-
 import { useDispatch } from 'react-redux';
-import searchAction from '../store/actions/search.action';
 import { Link } from 'react-router-dom';
 
-const HeaderWrapper = styled.div`
+import { Box, Button, Grid, TextField } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+
+import styled from 'styled-components';
+
+import searchAction from '../store/actions/search.action';
+
+const HeaderWrapper = styled.nav`
     min-width: 100%;
     height: 10vh;
 

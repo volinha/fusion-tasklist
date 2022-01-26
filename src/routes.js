@@ -7,7 +7,6 @@ import Header from "./components/Header/Header";
 const Home = lazy(() => import("./pages/Home/Home"));
 const NewTask = lazy(() => import("./pages/NewTask/NewTask"));
 const NotFound = lazy(() => import("./pages/NotFound/NotFound"));
-/* const Header = lazy(() => import("./components/Header/Header")); */
 
 const MainRoutes = () => (
   <BrowserRouter>

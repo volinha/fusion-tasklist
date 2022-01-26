@@ -1,11 +1,16 @@
 import { Button, Card, Divider, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+
 import TagActions from "../../components/store/actions/tags.action";
 import FormActions from "../../components/store/actions/forms.action";
+import TaskActions from "../../components/store/actions/tasks.action";
+import FormsActions from "../../components/store/actions/forms.action";
 
-import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
 import {
   TagListLoad,
   TaskDate,
@@ -13,10 +18,6 @@ import {
   TaskTags,
   TaskTitle,
 } from "../../components/Forms/Forms";
-
-import TaskActions from "../../components/store/actions/tasks.action";
-import FormsActions from "../../components/store/actions/forms.action";
-import styled from "styled-components";
 
 const Wrapper = styled.div`
   background-color: var(--primary); 

@@ -6,11 +6,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
 import { useDispatch, useSelector } from "react-redux";
+import { TaskComment, TaskPriority, TaskTagEdit } from "../Forms/Forms";
+
 import DialogActionsRedux from "../store/actions/dialog.action";
 import TaskActions from "../store/actions/tasks.action";
 import TagActions from "../store/actions/tags.action";
 import FormsActions from "../store/actions/forms.action";
-import { TaskComment, TaskPriority, TaskTagEdit } from "../Forms/Forms";
 
 export default function OpenDialog() {
   const dialogData = useSelector((state) => state.dialog.value[0]);

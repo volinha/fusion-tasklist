@@ -1,3 +1,7 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { v4 as uuid } from "uuid";
+
 import {
   Divider,
   FormControl,
@@ -15,19 +19,14 @@ import {
   Typography,
 } from "@mui/material";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import DeleteIcon from '@mui/icons-material/Delete';
 import { LocalizationProvider } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import ptbrLocale from "date-fns/locale/pt-BR";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { v4 as uuid } from "uuid";
 
 import TagActions from "../store/actions/tags.action";
-
 import FormsActions from "../store/actions/forms.action";
-
-import AddBoxIcon from "@mui/icons-material/AddBox";
-import DeleteIcon from '@mui/icons-material/Delete';
 
 const localeMap = {
   ptbr: ptbrLocale,

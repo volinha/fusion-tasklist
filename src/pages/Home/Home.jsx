@@ -3,11 +3,19 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import Container from "../../components/Container/Container";
 import Task from "../../components/Task/Task";
+import styled from 'styled-components';
 
 import TagActions from "../../components/store/actions/tags.action";
 import DialogActionsRedux from '../../components/store/actions/dialog.action';
 
 import { useDispatch } from "react-redux";
+
+const Wrapper = styled.div`
+  background-color: var(--primary); 
+  display: block;
+  height: 90vh;
+  box-sizing: border-box;
+`
 
 const Home = () => {
   const tasks = useSelector((state) => state.tasks.items);
@@ -40,10 +48,11 @@ const Home = () => {
   },[])
 
   return (
-    <div>
+    <Wrapper>
       <Grid
         container
-        spacing={6}
+        spacing={0}
+        columnSpacing={{ xs: 1, sm: 2, md: 3 }}
         columns={12}
         justifyContent="center"
       >
@@ -68,7 +77,7 @@ const Home = () => {
           </Container>
         </Grid>
       </Grid>
-    </div>
+    </Wrapper>
   );
 };
 

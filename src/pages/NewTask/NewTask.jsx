@@ -16,6 +16,15 @@ import {
 
 import TaskActions from "../../components/store/actions/tasks.action";
 import FormsActions from "../../components/store/actions/forms.action";
+import styled from "styled-components";
+
+const Wrapper = styled.div`
+  background-color: var(--primary); 
+  display: block;
+  height: 90vh;
+  box-sizing: border-box;
+`
+
 
 const NewTask = () => {
   const { id } = useParams();
@@ -82,7 +91,7 @@ const NewTask = () => {
   }
 
   return (
-    <>
+    <Wrapper>
       <Grid
         container
         direction="column"
@@ -123,7 +132,7 @@ const NewTask = () => {
                 <TaskTags />
               </Grid>
               <Grid item xs={12}>
-                <TagListLoad sx={{ width: "100%" }}/>
+                <TagListLoad />
               </Grid>
               <Grid item xs={12}>
                 <Button variant="outlined" onClick={() => sendTask()}>
@@ -134,7 +143,7 @@ const NewTask = () => {
           </Grid>
         </Card>
       </Grid>
-    </>
+    </Wrapper>
   );
 };
 

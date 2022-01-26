@@ -8,6 +8,7 @@ import styled from "styled-components";
 
 const StyledBox = styled(Box)`
   min-width: 320px;
+  height: 100%;
   margin-top: 8px;
 `;
 const StyledCard = styled(Card)`

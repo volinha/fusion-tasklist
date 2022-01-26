@@ -29,9 +29,8 @@ const CardButtons = styled(Button)`
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  width: 80%;
+  width: 100%;
   margin: 4px -4px !important;
-  border: 1px solid red;
 
   font-family: "Roboto", Helvetica !important;
 `;

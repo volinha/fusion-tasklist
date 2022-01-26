@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 const NotFoundPage = styled.div`
-    width: 100vw;
+    width: calc(100vw -);
     height: calc(100vh - 90px);
     display: flex;
     flex-direction: column;

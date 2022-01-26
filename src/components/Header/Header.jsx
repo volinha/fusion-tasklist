@@ -10,11 +10,10 @@ import { Link } from 'react-router-dom';
 
 const HeaderWrapper = styled.div`
     min-width: 100%;
-    min-height: (20% 1vh);
+    height: 10vh;
 
     display: flex;
     flex-direction: row;
-    padding: 10px;
 
     @media (min-width: 320px) {
         flex-direction: column;
@@ -70,7 +69,7 @@ const Header = ({ children, title }) => {
                 justifyContent="space-around"
                 alignItems="center"
             >
-                <StyledLink to="/"><HeaderTitle>{title}</HeaderTitle></StyledLink>
+                <StyledLink to="/"><HeaderTitle>TaskList</HeaderTitle></StyledLink>
                 <Box sx={{ display: 'flex', alignItems: 'flex-end' }}>
                     <SearchIcon sx={{ mr: 1, my: 0.5 }} />
                     <StyledSearchBox 
@@ -81,7 +80,7 @@ const Header = ({ children, title }) => {
                         onChange={(e) => dispatch(searchAction.SearchTextUpdate(e.target.value))}
                     />
                 </Box>
-                <StyledLink to="/new_task"><Button variant="filled">+ Tarefa</Button></StyledLink>
+                <StyledLink to="/new_task"><Button variant="outlined">+ Tarefa</Button></StyledLink>
             </Grid>
         </HeaderWrapper>
     );

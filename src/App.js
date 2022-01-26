@@ -1,19 +1,16 @@
-import { BrowserRouter as Router } from "react-router-dom";
-import { Provider } from 'react-redux';
-import MainRoutes from './routes';
-import Header from "./components/Header/Header";
+import { Provider } from "react-redux";
+import MainRoutes from "./routes";
+import Dialog from "./components/Dialog/Dialog";
 
-import store from './components/store';
+import store from "./components/store";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <Router>
-        <Header title="Lista de Tarefas" />
-        <MainRoutes />
-      </Router>
+      <MainRoutes />
+      <Dialog />
     </Provider>
-  )
-}
+  );
+};
 
 export default App;

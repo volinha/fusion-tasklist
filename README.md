@@ -22,11 +22,12 @@ Criar um gerenciador de tarefas simplificado.
 - Permitir edição da prioridade por modal/dialog;
 
 ## Em desenvolvimento:
-- Ajustes básicos de design e responsividade
+
+> NDA
 
 # Versão
 
-0.9
+1.0
 
 ### 💻 Desenvolvido por Vinícius Fernandes
 
